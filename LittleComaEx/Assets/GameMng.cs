@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pakage01;
 /*
  *  개선 사항 
- *  
  *  오브젝트 풀 형식으로 만든다 
  *  
  *  질문사항
- *  생성주기는 얼마나? 
+ *  생성주기는 얼마나?
  *  
  *  필기-
  *  
@@ -18,8 +18,8 @@ using UnityEngine;
 public class GameMng : MonoBehaviour {
 
     public GameObject obj;
-    int objCount;
-
+    public int objCount; // 한 스테이지에 총 방해물 수 제한 
+    static int stage=1;
     private static GameMng _instance = null; // 자신의 인스턴스를 만든다. 외부에서 접근 하지 못하게 접근자는 private다
 
     public static GameMng Instance  // 외부에서 접근 가능한 메소드를 만들어준다. 
@@ -37,12 +37,17 @@ public class GameMng : MonoBehaviour {
     }
     void Start()
     {
-        StartCoroutine(obstruction(1));
+        StartCoroutine(obstruction());
+
     }
 
-    IEnumerator obstruction(int stage) // 스테이지 끝날때 stage값을 바꿔줘야함
+
+
+
+
+    IEnumerator obstruction() // 스테이지 끝날때 stage값을 바꿔줘야함
     {
-        float incidence = 0.2f;
+        float incidence = 0.2f; // 
         switch (stage)
         {
             case 1:
@@ -70,10 +75,10 @@ public class GameMng : MonoBehaviour {
                 incidence = 0.45f;
                 break;
         }
-        
-        //Vector3 velocity = GetComponent<Rigidbody>().velocity;
 
-        while (true) // 한 스테이지에 총 방해물 수 제한 
+        //Vector3 velocity = GetComponent<Rigidbody>().velocity;
+        
+        while (true) 
         {
             if (objCount < 8)
             {
