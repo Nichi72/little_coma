@@ -17,10 +17,12 @@ using Pakage01;
  * */
 public class GameMng : MonoBehaviour {
 
-    public GameObject obj;
+    public GameObject [] obj;
     public int objCount; // 한 스테이지에 총 방해물 수 제한 
     static int stage=1;
-    private static GameMng _instance = null; // 자신의 인스턴스를 만든다. 외부에서 접근 하지 못하게 접근자는 private다
+    public int now_obstruction;               // 현재 쓸 Obstruction_Status의 배열을 랜덤으로 선정
+    public int create_obstruction_list;       // Obstruction_Status의 배열에서 사용할 총 갯수 만약 2를 적어두면 4개의 배열중 2개를 쓴다는 의미 
+    private static GameMng _instance = null;  // 자신의 인스턴스를 만든다. 외부에서 접근 하지 못하게 접근자는 private다
 
     public static GameMng Instance  // 외부에서 접근 가능한 메소드를 만들어준다. 
     {
@@ -37,68 +39,59 @@ public class GameMng : MonoBehaviour {
     }
     void Start()
     {
-        StartCoroutine(obstruction());
-
+        create_obstruction_list = 0; // Obstruction_Status의 배열에서 사용할 총 갯수 만약 2를 적어두면 4개의 배열중 2개를 쓴다는 의미 
+        now_obstruction = Random.Range(0, create_obstruction_list);
+        StartCoroutine(Create_obstruction(stage));
     }
 
 
-
-
-
-    IEnumerator obstruction() // 스테이지 끝날때 stage값을 바꿔줘야함
+    IEnumerator Create_stage(int stage) // 스테이지 끝날때 stage값을 바꿔줘야함
     {
-        float incidence = 0.2f; // 
+
+        yield return new WaitForSeconds(0.5f);// 생성주기 
+    }
+
+        IEnumerator Create_obstruction(int stage) // 스테이지 끝날때 stage값을 바꿔줘야함
+    {
+        if (stage < 0)
+        {
+            stage = 1;
+            Debug.Log("stage 값이 음수 또는 0으로 입력되어 1로 초기화 되었습니다.");
+        }
+                
         switch (stage)
         {
             case 1:
-                incidence = 0.2f;
-                break;
             case 2:
-                incidence = 0.25f;
+                create_obstruction_list = 2;
                 break;
-            case 3:
-                incidence = 0.3f;
-                break;
+            case 3:    
             case 4:
-                incidence = 0.3f;
-                break;
             case 5:
-                incidence = 0.3f;
-                break;
             case 6:
-                incidence = 0.3f;
-                break;
             case 7:
-                incidence = 0.45f;
-                break;
             case 8:
-                incidence = 0.45f;
+                create_obstruction_list = 3; // 미정
                 break;
         }
-
-        //Vector3 velocity = GetComponent<Rigidbody>().velocity;
-        
+       
         while (true) 
         {
-            if (objCount < 8)
+            if (Obstruction_Status.Obstruction_count < GameBalancer.stage_Status[stage].number_restrictions) // [ 총 개수 체크 ] // 현재 방해물 총개수  < 현재 스테이지 방해물 제한수 
             {
-                Debug.Log("생성 준비");
-                transform.position = new Vector3(Random.Range(-5, 5), 8, 0);
-                Debug.Log("incidence  = " + incidence);
-                if (Random.Range(0f, 1f) < incidence) // 출현률
+                transform.position = new Vector3(Random.Range(-5, 6), 8, 0);                           // X축 -5 부터 5 까지 출현
+                if (Random.Range(0f, 1f) < GameBalancer.obstruction_status[now_obstruction].incidence) // 현재 선택된 ob 출현률 체크 
                 {
-                    Instantiate(obj, transform.position, transform.rotation);
-                    yield return new WaitForSeconds(0.5f); // 생성주기 
+                    Instantiate(obj[now_obstruction], transform.position, transform.rotation);  // 적 인스턴스 생성
+                    Obstruction_Status.Obstruction_count++;                                     // 생성된 적 인스턴스 카운트 +1
+                        Debug.Log("현재 총 만들어진 수 :: " + Obstruction_Status.Obstruction_count);
                 }
                 else
                 {
                     Debug.Log("생성 안됨");
-                    yield return new WaitForSeconds(0.5f);// 생성주기 
                 }
             }
             yield return new WaitForSeconds(0.5f);// 생성주기 
         }
-        
-
     }
 }
