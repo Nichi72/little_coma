@@ -11,7 +11,9 @@ public class CharacterControl : MonoBehaviour {
     // 현재 캐릭터의 행동 상태
     State state = State.Idle;
     // 캐릭터가 이동할 좌표 정리
-    const float LeftPosition = -1.0f, CenterPosition = 0.0f, RightPosition = 1.0f;
+    float LeftPosition = -1.5f, CenterPosition = 0.0f, RightPosition = 1.5f;
+    // 캐릭터의 기본 좌표
+    float PlayerPositionY, PlayerPositionZ;
     // 현재 캐릭터가 이동해야할 좌표를 저장할 변수
     Vector3 movepoint;
 
@@ -44,6 +46,8 @@ public class CharacterControl : MonoBehaviour {
         characterDataReset();
         state = State.Run;
         playerTransform = this.gameObject.transform;
+        PlayerPositionY = playerTransform.position.y;
+        PlayerPositionZ = playerTransform.position.z;
     }
 	
 	// Update is called once per frame
@@ -60,9 +64,9 @@ public class CharacterControl : MonoBehaviour {
                 state = State.MovePosition;
                 switch (point)
                 {
-                    case "Left": movepoint = new Vector3(LeftPosition, 0, 0); break;
-                    case "Center": movepoint = new Vector3(CenterPosition, 0, 0); break;
-                    case "Right": movepoint = new Vector3(RightPosition, 0, 0); break;
+                    case "Left": movepoint = new Vector3(LeftPosition, PlayerPositionY, PlayerPositionZ); break;
+                    case "Center": movepoint = new Vector3(CenterPosition, PlayerPositionY, PlayerPositionZ); break;
+                    case "Right": movepoint = new Vector3(RightPosition, PlayerPositionY, PlayerPositionZ); break;
                 }
                 StartCoroutine("MoveCharacter");
                 break;
