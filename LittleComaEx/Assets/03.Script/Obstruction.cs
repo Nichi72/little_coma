@@ -69,6 +69,9 @@ public class Obstruction : MonoBehaviour {
     2. 델리게이트 인스턴스 생성 인스턴스 생성 할때 델리게이트가 참조할 메소드를 매개 변수로 넘겨줌
     3 델리게이트를 호출함 
 
+
+
+        - 안된점 
  * */
     // Use this for initialization
 
@@ -146,10 +149,27 @@ public class Obstruction : MonoBehaviour {
                 obstruction();
                 break;
 
-            case (int)GameBalancer.Obstruction_enum.Fruit_tree: // 일직선 아래로 
+            case (int)GameBalancer.Obstruction_enum.cookie: // 
+                obstruction();
+                break;
+            case (int)GameBalancer.Obstruction_enum.Cake: //
+                obstruction += new Delgate_obstruction(pattern_fast);
+                obstruction();
+                break;
+            case (int)GameBalancer.Obstruction_enum.Macaron:
+                obstruction = new Delgate_obstruction(pattern_base);
+                obstruction();
+
+                obstruction -= new Delgate_obstruction(pattern_base);
+                break;
+            case (int)GameBalancer.Obstruction_enum.Pudding: 
 
                 break;
-   
+            case (int)GameBalancer.Obstruction_enum.Windmill: 
+
+                break;
+          
+
         }
         yield return new WaitForSeconds(0.1f);
     }
@@ -173,11 +193,11 @@ public class Obstruction : MonoBehaviour {
 
     public void pattern_LR()
     {
-        Debug.Log("@@@ pattern_LR() create_pos :: " + create_pos);
+        //Debug.Log("@@@ pattern_LR() create_pos :: " + create_pos);
         
         if(create_pos.x <= 0)                                                  //이전 값(random%2 == 0)
         {
-            Debug.Log("@@@ X값 음수라서 오른쪽으로 진행됨 ");
+            //Debug.Log("@@@ X값 음수라서 오른쪽으로 진행됨 ");
             GetComponent<Rigidbody>().AddForce(new Vector3(GameBalancer.obstruction_status[GameMng.Instance.now_obstruction].speed * Time.deltaTime * 1000, 0, 0));
         }
         else if(create_pos.x >0)                                                             // 이전 값(random % 2 == 1)
@@ -202,8 +222,20 @@ public class Obstruction : MonoBehaviour {
     {
         while (true)
         {
-            GameMng.Instance.now_obstruction = Random.Range(4, 8); // 재설정 해줘야 함 
-            Debug.Log("RE_now_obstruction: " + GameMng.Instance.now_obstruction);
+            Debug.Log("@@Game Stage: " + GameMng.Instance.stage);
+
+            if (GameMng.Instance.stage == 1)
+            {
+                GameMng.Instance.now_obstruction = Random.Range(4, 8); // 재설정 해줘야 함
+                Debug.Log("RE_now_obstruction: " + GameMng.Instance.now_obstruction);
+
+            }
+            else
+            {
+                GameMng.Instance.now_obstruction = Random.Range(7, 14);
+                Debug.Log("RE_now_obstruction: " + GameMng.Instance.now_obstruction);
+            }
+           // Debug.Log("RE_now_obstruction: " + GameMng.Instance.now_obstruction);
             //yield return new WaitForSeconds(4f);
             yield return new WaitForSeconds(delay);
             //GameMng.Instance.now_obstruction = Random.Range(0, GameMng.Instance.create_obstruction_list);       어차피 obj 생성 될때마다  

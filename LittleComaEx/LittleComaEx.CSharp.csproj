@@ -79,14 +79,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\03.Script\ButtonManager.cs" />
+    <Compile Include="Assets\03.Script\ChangeScrollDirection.cs" />
     <Compile Include="Assets\03.Script\CharacterControl.cs" />
     <Compile Include="Assets\03.Script\CharacterMove.cs" />
     <Compile Include="Assets\03.Script\GameMng.cs" />
     <Compile Include="Assets\03.Script\Obstruction.cs" />
+    <Compile Include="Assets\03.Script\Preparations.cs" />
     <Compile Include="Assets\03.Script\Random.cs" />
     <Compile Include="Assets\03.Script\SoundManager.cs" />
     <Compile Include="Assets\03.Script\Status.cs" />
     <Compile Include="Assets\03.Script\UIControl.cs" />
+    <Compile Include="Assets\03.Script\UVScroller.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

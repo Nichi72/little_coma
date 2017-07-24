@@ -23,7 +23,7 @@ public class GameMng : MonoBehaviour {
 
     public GameObject [] obj;
     public int objCount; // 한 스테이지에 총 방해물 수 제한 
-    static int stage=1;
+    public int stage=2;
     public int now_obstruction;               // 현재 쓸 Obstruction_Status의 배열을 랜덤으로 선정
     public int create_obstruction_list;       // Obstruction_Status의 배열에서 사용할 총 갯수 만약 2를 적어두면 4개의 배열중 2개를 쓴다는 의미 
     public Vector3 create_obstruction_position;
@@ -44,7 +44,7 @@ public class GameMng : MonoBehaviour {
     }
     void Start()
     {
-        create_obstruction_list = 2; // Obstruction_Status의 배열에서 사용할 총 갯수 만약 2를 적어두면 4개의 배열중 2개를 쓴다는 의미
+        create_obstruction_list = 2; // Obstruction_Status의 배열에서 사용할 총 갯수 만약 2를 적어두면 4개의 배열중 2개를 쓴다는 의미 // 아직 안씀
                                      //List<int> create_obstruction_list = new List<int>();
                                      //now_obstruction = 7; //
         now_obstruction =Random.Range(4, 8); // 4~7
@@ -59,12 +59,14 @@ public class GameMng : MonoBehaviour {
     IEnumerator Create_stage(int stage) // 스테이지 끝날때 stage값을 바꿔줘야함 
     {
         Debug.Log("@@ 씬 바뀌어요!");
-        if (stage == GameBalancer.stage_Status[stage].stage_number)
+        if (stage == GameBalancer.stage_Status[this.stage].stage_number)
         {
             
-             yield return new WaitForSeconds(GameBalancer.stage_Status[stage].stage_length); 
-            // yield return new WaitForSeconds(GameBalancer.stage_Status[stage].stage_length); 
+            //yield return new WaitForSeconds(GameBalancer.stage_Status[stage].stage_length); 
+            yield return new WaitForSeconds(10f);
+            this.stage = 2;
             SceneManager.LoadScene("Stage_02");
+            
         }
     }
 
@@ -88,7 +90,7 @@ public class GameMng : MonoBehaviour {
             case 6:
             case 7:
             case 8:
-                create_obstruction_list = 3; // 미정
+                now_obstruction = Random.Range(7, 14); // 미정
                 break;
         }
        
