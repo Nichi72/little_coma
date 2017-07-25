@@ -112,7 +112,7 @@ public class GameMng : MonoBehaviour {
                     Debug.Log("생성 안됨");
                 }
             }
-            yield return new WaitForSeconds(0.425f);// 생성주기 
+            yield return new WaitForSeconds(0.4f);// 생성주기 
             // Test용 //yield return new WaitForSeconds(6f);// 생성주기 
         }
     }
