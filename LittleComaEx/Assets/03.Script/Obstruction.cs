@@ -74,7 +74,7 @@ public class Obstruction : MonoBehaviour {
         - 안된점 
  * */
     // Use this for initialization
-
+    public float delay=4f;
     public float damage;
     public delegate void Delgate_obstruction();
     public delegate IEnumerator Delgate_I_obstruction();
@@ -98,24 +98,27 @@ public class Obstruction : MonoBehaviour {
         //I_obstruction += new Delgate_I_obstruction(I_Left_or_right);
         //I_obstruction += new Delgate_I_obstruction(I_pattern_base);
         StartCoroutine(Helper());
-        StartCoroutine(Destroy_obstruction(4.0f));
+        StartCoroutine(Destroy_obstruction(delay));
     }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+    
 
     public void delgate_SetUp()
     {
 
     }
+
+
     public IEnumerator Helper()
     {
          // 일반 함수 델리게이트 
         obstruction = new Delgate_obstruction(pattern_base);
         // 와일문 안에 스위치문 있었음
-        Debug.Log("GameMng.Instance.now_obstruction :" +GameMng.Instance.now_obstruction);
+        //Debug.Log("GameMng.Instance.now_obstruction :" +GameMng.Instance.now_obstruction);
         switch (GameBalancer.obstruction_status[GameMng.Instance.now_obstruction].name_number)
         {
             
@@ -129,7 +132,7 @@ public class Obstruction : MonoBehaviour {
                 break;
 
             case (int)GameBalancer.Obstruction_enum.grape: // 곡선 아래로 
-                Debug.Log("!!!!!!!!!!!!!!6번 그래프 들어왔습니다 ");
+                //Debug.Log("!!!!!!!!!!!!!!6번 그래프 들어왔습니다 ");
                 obstruction = new Delgate_obstruction(pattern_base);
                 obstruction();
 
@@ -148,6 +151,9 @@ public class Obstruction : MonoBehaviour {
 
                 obstruction();
                 break;
+            case (int)GameBalancer.Obstruction_enum.Fruit_tree: // 빠르게 일직선 아래로 
+                obstruction();
+                break;
 
             case (int)GameBalancer.Obstruction_enum.cookie: // 
                 obstruction();
@@ -161,12 +167,21 @@ public class Obstruction : MonoBehaviour {
                 obstruction();
 
                 obstruction -= new Delgate_obstruction(pattern_base);
+                while (true)
+                {
+                    obstruction += new Delgate_obstruction(pattern_slerp);
+                    obstruction();
+                    yield return new WaitForSeconds(0.5f);
+                }
                 break;
-            case (int)GameBalancer.Obstruction_enum.Pudding: 
+            case (int)GameBalancer.Obstruction_enum.Pudding:
+                obstruction = new Delgate_obstruction(pattern_base);
+                obstruction += new Delgate_obstruction(pattern_LR);
 
+                obstruction();
                 break;
-            case (int)GameBalancer.Obstruction_enum.Windmill: 
-
+            case (int)GameBalancer.Obstruction_enum.Windmill:
+                obstruction();
                 break;
           
 
@@ -217,35 +232,41 @@ public class Obstruction : MonoBehaviour {
             GetComponent<Rigidbody>().AddForce(new Vector3(-GameBalancer.obstruction_status[GameMng.Instance.now_obstruction].speed * Time.deltaTime *100 , 0, 0));
         }
     }
+    public override string ToString()
+    {
+        return string.Format("stage :: {0} //  now_obstruction  :: {1}", GameMng.Instance.stage, GameMng.Instance.now_obstruction);
+    }
 
     public IEnumerator Destroy_obstruction(float delay)
     {
         while (true)
         {
-            Debug.Log("@@Game Stage: " + GameMng.Instance.stage);
+            //Debug.Log("@@Game Stage: " + GameMng.Instance.stage);
+
 
             if (GameMng.Instance.stage == 1)
             {
-                GameMng.Instance.now_obstruction = Random.Range(4, 8); // 재설정 해줘야 함
-                Debug.Log("RE_now_obstruction: " + GameMng.Instance.now_obstruction);
+                GameMng.Instance.now_obstruction = Random.Range(4, 9); // 재설정 해줘야 함
+                //Debug.Log("RE_now_obstruction: " + GameMng.Instance.now_obstruction);
 
+            }
+            else if (GameMng.Instance.stage == 2)
+            {
+                GameMng.Instance.now_obstruction = Random.Range(9, 14);
+                //Debug.Log("RE_now_obstruction: " + GameMng.Instance.now_obstruction);
             }
             else
             {
-                GameMng.Instance.now_obstruction = Random.Range(7, 14);
-                Debug.Log("RE_now_obstruction: " + GameMng.Instance.now_obstruction);
+               Debug.Log("Now_ob_Exception");
             }
-           // Debug.Log("RE_now_obstruction: " + GameMng.Instance.now_obstruction);
-            //yield return new WaitForSeconds(4f);
             yield return new WaitForSeconds(delay);
-            //GameMng.Instance.now_obstruction = Random.Range(0, GameMng.Instance.create_obstruction_list);       어차피 obj 생성 될때마다  
-            //Debug.Log("## now_obstruction :: " + GameMng.Instance.now_obstruction);
             Obstruction_Status.Obstruction_count--;
-            Debug.Log("ㅡ################# Destroy_obstruction TEST : " + TEST);
             obstruction = null;
+            Debug.Log(ToString());
             Destroy(gameObject);
         }
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {

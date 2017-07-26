@@ -58,15 +58,18 @@ public class GameMng : MonoBehaviour {
     }
     IEnumerator Create_stage(int stage) // 스테이지 끝날때 stage값을 바꿔줘야함 
     {
-        Debug.Log("@@ 씬 바뀌어요!");
+        
         if (stage == GameBalancer.stage_Status[this.stage].stage_number)
         {
             
             //yield return new WaitForSeconds(GameBalancer.stage_Status[stage].stage_length); 
             yield return new WaitForSeconds(10f);
+            Debug.Log("@@ 씬 바뀌어요!");
             this.stage = 2;
             SceneManager.LoadScene("Stage_02");
-            
+            now_obstruction = Random.Range(7, 14);
+            Debug.Log("씬 바뀐 다음의"+now_obstruction);
+
         }
     }
 
@@ -99,17 +102,17 @@ public class GameMng : MonoBehaviour {
             if (Obstruction_Status.Obstruction_count < GameBalancer.stage_Status[stage].number_restrictions) // [ 총 개수 체크 ] // 현재 방해물 총개수  < 현재 스테이지 방해물 제한수 
             {
                 create_obstruction_position = transform.position = new Vector3(Random.Range(-6f, 7f), 8, 0);                           // X축 -5 부터 5 까지 출현
-                Debug.Log("@@@create_obstruction_position :: " + create_obstruction_position);
+                //Debug.Log("@@@create_obstruction_position :: " + create_obstruction_position);
                 if (Random.Range(0f, 1f) < GameBalancer.obstruction_status[now_obstruction].incidence) // 현재 선택된 ob 출현률 체크 
                 {
-                    Debug.Log("now_obstruction: "+now_obstruction);
+                    //Debug.Log("now_obstruction: "+now_obstruction);
                     Instantiate(obj[now_obstruction], transform.position, transform.rotation);  // 적 인스턴스 생성 // 오브젝트를 골라내기 위해now_obstruction를 쓰는 것임 
                     Obstruction_Status.Obstruction_count++;                                     // 생성된 적 인스턴스 카운트 +1
-                    Debug.Log("현재 총 만들어진 수 :: " + Obstruction_Status.Obstruction_count);
+                    //Debug.Log("현재 총 만들어진 수 :: " + Obstruction_Status.Obstruction_count);
                 }
                 else
                 {
-                    Debug.Log("생성 안됨");
+                    //Debug.Log("생성 안됨");
                 }
             }
             yield return new WaitForSeconds(0.4f);// 생성주기 
