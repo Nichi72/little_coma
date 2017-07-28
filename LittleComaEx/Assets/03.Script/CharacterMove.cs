@@ -1,24 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class CharacterMove : MonoBehaviour {
+public class CharacterMove : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+{
 
     CharacterControl characterControl;
 
+    public string direction;
+
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         characterControl = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterControl>();
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
     }
 
-    public void SendMessage(string point)
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        characterControl.SendMessage("moveCharacter", direction);
+        print("RightClicked");
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        characterControl.SendMessage("stopCharacter");
+    }
+
+    /*
+    public void SendMessage(string direction)
     {
         print("SendMessage");
-        characterControl.SendMessage("SetMovePosition", point);
+        characterControl.SendMessage("moveCharacter", direction);
     }
+    */
 }

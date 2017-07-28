@@ -267,13 +267,23 @@ public class Obstruction : MonoBehaviour {
         }
     }
 
-
+    // 플레이어 캐릭터와의 충돌 체크
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag == "Player")
         {
             Destroy_obstruction(0);
-            collision.gameObject.SendMessage("OnHit", damage);
+            collision.gameObject.SendMessage("OnDamage", damage);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        object[] data = new object[2] {this.gameObject, damage};
+        if (other.tag == "Player")
+        {
+            Destroy_obstruction(0);
+            other.gameObject.SendMessage("OnDamage", data);
         }
     }
 

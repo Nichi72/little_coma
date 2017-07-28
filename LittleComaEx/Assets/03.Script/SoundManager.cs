@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour {
+public class SoundManager : MonoBehaviour
+{
 
     public static SoundManager _instence;
-    public AudioClip SE_buttonClick;
+    //public AudioClip SE_buttonClick;
 
     // 사운드 상태
     enum State { NONE, IDLE, PLAYING, SILENT, ON, OFF };
@@ -45,14 +46,16 @@ public class SoundManager : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //Audio_BGM.loop = true; // loop 설정이 왜 안될까나..
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
 
-	}
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     // 배경음
     // 배경음 셋팅
@@ -63,7 +66,7 @@ public class SoundManager : MonoBehaviour {
     }
 
     // 배경음 시작
-    public void playBGM (AudioClip clip)
+    public void playBGM(AudioClip clip)
     {
         //print("작동");
         //print("BGM 상태: " + BGMState);
@@ -78,6 +81,7 @@ public class SoundManager : MonoBehaviour {
                 break;
             // 배경 오디오 소스가 다른 작업을 실행 중일 경우
             case State.PLAYING:
+                setBGMclip(clip);
                 Audio_BGM.Play();
                 BGMState = State.PLAYING;
                 break;
@@ -102,12 +106,12 @@ public class SoundManager : MonoBehaviour {
     public void BGM_On()
     {
         BGMState = State.IDLE;
-        if(Audio_BGM.clip != null)
+        if (Audio_BGM.clip != null)
             Audio_BGM.Play();
     }
 
     // 효과음
-    public void PlaySE (AudioClip clip)
+    public void PlaySE(AudioClip clip)
     {
         switch (SEState)
         {
