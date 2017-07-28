@@ -101,7 +101,7 @@ public class GameMng : MonoBehaviour {
         {
             if (Obstruction_Status.Obstruction_count < GameBalancer.stage_Status[stage].number_restrictions) // [ 총 개수 체크 ] // 현재 방해물 총개수  < 현재 스테이지 방해물 제한수 
             {
-                create_obstruction_position = transform.position = new Vector3(Random.Range(-6f, 7f), 8, 0);                           // X축 -5 부터 5 까지 출현
+                create_obstruction_position = transform.position = new Vector3(Random.Range(-1f, 2f), 8, 0);                           // X축 -5 부터 5 까지 출현
                 //Debug.Log("@@@create_obstruction_position :: " + create_obstruction_position);
                 if (Random.Range(0f, 1f) < GameBalancer.obstruction_status[now_obstruction].incidence) // 현재 선택된 ob 출현률 체크 
                 {

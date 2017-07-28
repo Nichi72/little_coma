@@ -82,13 +82,13 @@ namespace Pakage01
             new Obstruction_Status((int)Obstruction_enum.peach,0.8f,2f,5f,6f),
             new Obstruction_Status((int)Obstruction_enum.grape,0.75f,4f,12f,6f),
             new Obstruction_Status((int)Obstruction_enum.Strawberry,0.7f,3f,12f,6f),
-            new Obstruction_Status((int)Obstruction_enum.Fruit_tree,0.6f,5f,5f, 9f),
+            new Obstruction_Status((int)Obstruction_enum.Fruit_tree,0.6f,5f,10f, 9f),
 
             new Obstruction_Status((int)Obstruction_enum.cookie,0.85f,2f,10f,5f),
             new Obstruction_Status((int)Obstruction_enum.Cake,0.7f,4f,15f,5f),
             new Obstruction_Status((int)Obstruction_enum.Macaron,0.8f,2f,12f,5f),
             new Obstruction_Status((int)Obstruction_enum.Pudding,0.7f,2f,12f,5f),
-            new Obstruction_Status((int)Obstruction_enum.Windmill,0.65f,5f,5f,8f),
+            new Obstruction_Status((int)Obstruction_enum.Windmill,0.65f,5f,10f,8f),
 
 
         };
