@@ -2,11 +2,11 @@
 <doc>
   <members>
     <assembly>
-      <name>UnityEngine.Timeline</name>
+      <name>UnityEngine.Sequence</name>
     </assembly>
     <member name="T:UnityEngine.Timeline.ActivationControlPlayable">
       <summary>
-        <para>Playable that controls the active state of a GameObject.</para>
+        <para>Playable that controls activation (active state) of a GameObject.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Timeline.ActivationControlPlayable.gameObject">
@@ -16,171 +16,28 @@
     </member>
     <member name="F:UnityEngine.Timeline.ActivationControlPlayable.postPlayback">
       <summary>
-        <para>The active state to set on the GameObject after the graph has been stopped</para>
+        <para>Flag that determine what is the active state of the GameObject when the Playable Graph Stop.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.Timeline.ActivationControlPlayable.PostPlaybackState">
       <summary>
-        <para>The state of a GameObject's activeness when a PlayableGraph stops.</para>
+        <para>The active state of a GameObject when a Playable Graph stops.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Timeline.ActivationControlPlayable.PostPlaybackState.Active">
       <summary>
-        <para>Set the GameObject to active when the PlayableGraph stops.</para>
+        <para>Set the GameObject Active when the Playable Graph stops.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Timeline.ActivationControlPlayable.PostPlaybackState.Inactive">
       <summary>
-        <para>Set the GameObject to inactive when the PlayableGraph stops.</para>
+        <para>Set the GameObject Inactive when the Playable Graph stops.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Timeline.ActivationControlPlayable.PostPlaybackState.Revert">
       <summary>
-        <para>Revert the GameObject to the active state it was before the PlayableGraph started.</para>
+        <para>Set the GameObject in the same state as before the Playable Graph starts.</para>
       </summary>
-    </member>
-    <member name="T:UnityEngine.Timeline.ActivationTrack">
-      <summary>
-        <para>An activation track is a track that can be used to control the active state of a GameObject.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.ActivationTrack.postPlaybackState">
-      <summary>
-        <para>Specifies what state to leave the GameObject in after the Timeline has finished playing.</para>
-      </summary>
-    </member>
-    <member name="T:UnityEngine.Timeline.ActivationTrack.PostPlaybackState">
-      <summary>
-        <para>Specify what state to leave the GameObject in after the Timeline has finished playing.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.Timeline.ActivationTrack.PostPlaybackState.Active">
-      <summary>
-        <para>Set the GameObject to active.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.Timeline.ActivationTrack.PostPlaybackState.Inactive">
-      <summary>
-        <para>Set the GameObject to Inactive.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.Timeline.ActivationTrack.PostPlaybackState.LeaveAsIs">
-      <summary>
-        <para>Leave the GameObject in the state it was when the Timeline was stopped.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.Timeline.ActivationTrack.PostPlaybackState.Revert">
-      <summary>
-        <para>Revert the GameObject to the state in was in before the Timeline was playing.</para>
-      </summary>
-    </member>
-    <member name="T:UnityEngine.Timeline.AnimationPlayableAsset">
-      <summary>
-        <para>A playable asset wrapper that represents a single AnimationClip clip in Timeline.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AnimationPlayableAsset.clip">
-      <summary>
-        <para>The animation clip.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AnimationPlayableAsset.matchTargetFields">
-      <summary>
-        <para>Specify which fields should be matched when aligning offsets.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AnimationPlayableAsset.position">
-      <summary>
-        <para>The root motion position offset of the clip.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AnimationPlayableAsset.rotation">
-      <summary>
-        <para>The root motion rotation offset of the clip.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AnimationPlayableAsset.useTrackMatchFields">
-      <summary>
-        <para>Specifies to use matching options as defined by the track.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEngine.Timeline.AnimationPlayableAsset.ResetOffsets">
-      <summary>
-        <para>Resets the root motion offsets to default values.</para>
-      </summary>
-    </member>
-    <member name="T:UnityEngine.Timeline.AnimationTrack">
-      <summary>
-        <para>A Timeline track used for playing back animations on an Animator.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AnimationTrack.applyOffsets">
-      <summary>
-        <para>Specifies whether to apply track root motion offsets to all clips on the track.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AnimationTrack.inClipMode">
-      <summary>
-        <para>Specifies whether the Animation Track has clips, or is in infinite mode.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AnimationTrack.matchTargetFields">
-      <summary>
-        <para>Specifies which fields to match when aligning root motion offsets of clips.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AnimationTrack.openClipOffsetPosition">
-      <summary>
-        <para>This represents the root motion position offset of a track in infinite mode.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AnimationTrack.openClipOffsetRotation">
-      <summary>
-        <para>This represents the root motion rotation offset of a track in infinite mode.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AnimationTrack.position">
-      <summary>
-        <para>The root motion position offset of the entire track.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AnimationTrack.rotation">
-      <summary>
-        <para>The root motion rotation offset of the entire track.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEngine.Timeline.AnimationTrack.CreateClip(UnityEngine.AnimationClip)">
-      <summary>
-        <para>Creates a TimelineClip using an AnimationClip.</para>
-      </summary>
-      <param name="clip">Source animation clip of the resulting TimelineClip.</param>
-      <returns>
-        <para>A new TimelineClip which has an AnimationPlayableAsset asset attached.</para>
-      </returns>
-    </member>
-    <member name="T:UnityEngine.Timeline.AudioPlayableAsset">
-      <summary>
-        <para>PlayableAsset wrapper for an AudioClip in Timeline.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.AudioPlayableAsset.clip">
-      <summary>
-        <para>The audio clip this asset will generate a player for.</para>
-      </summary>
-    </member>
-    <member name="T:UnityEngine.Timeline.AudioTrack">
-      <summary>
-        <para>A Timeline track that can play AudioClips.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEngine.Timeline.AudioTrack.CreateClip(UnityEngine.AudioClip)">
-      <summary>
-        <para>Create an TimelineClip for playing an AudioClip on this track.</para>
-      </summary>
-      <param name="clip">The audio clip to play.</param>
-      <returns>
-        <para>A TimelineClip with an AudioPlayableAsset asset.</para>
-      </returns>
     </member>
     <member name="T:UnityEngine.Timeline.ClipCaps">
       <summary>
@@ -194,12 +51,12 @@
     </member>
     <member name="F:UnityEngine.Timeline.ClipCaps.Blending">
       <summary>
-        <para>The clip representing the playable supports blending between clips.</para>
+        <para>The clips representing the playables supports blending between clips.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Timeline.ClipCaps.ClipIn">
       <summary>
-        <para>The clip representing the playable supports initial local times greater than zero.</para>
+        <para>The clip representing the playable supports starting times greater than zero.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Timeline.ClipCaps.Extrapolation">
@@ -239,7 +96,7 @@
     </member>
     <member name="F:UnityEngine.Timeline.ControlPlayableAsset.postPlayback">
       <summary>
-        <para>Indicates the active state of the gameObject when the Timeline is stopped.</para>
+        <para>How the sourceGameObject active state will be at the end of the graph.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Timeline.ControlPlayableAsset.prefabGameObject">
@@ -272,24 +129,14 @@
         <para>Indicates if user wants to control ParticleSystems.</para>
       </summary>
     </member>
-    <member name="T:UnityEngine.Timeline.ControlTrack">
-      <summary>
-        <para>A Track whose clips control time-related elements on a GameObject.</para>
-      </summary>
-    </member>
     <member name="T:UnityEngine.Timeline.DirectorControlPlayable">
       <summary>
-        <para>Playable used to control other PlayableDirectors.</para>
+        <para>Playable used to control other PlayableDirector.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Timeline.DirectorControlPlayable.director">
       <summary>
-        <para>The PlayableDirector to control.</para>
-      </summary>
-    </member>
-    <member name="T:UnityEngine.Timeline.GroupTrack">
-      <summary>
-        <para>A group track is a container that allows tracks to be arranged in a hierarchical manner.</para>
+        <para>This is the DirectorPlayable to control.</para>
       </summary>
     </member>
     <member name="?:UnityEngine.Timeline.IPropertyCollector">
@@ -353,13 +200,13 @@
     </member>
     <member name="M:UnityEngine.Timeline.IPropertyCollector.PushActiveGameObject(UnityEngine.GameObject)">
       <summary>
-        <para>Sets the active game object for subsequent property modifications.</para>
+        <para>Sets the active game object for subsequence property modifications.</para>
       </summary>
       <param name="gameObject"></param>
     </member>
     <member name="?:UnityEngine.Timeline.IPropertyPreview">
       <summary>
-        <para>Implement this interface in a PlayableAsset to specify which properties will be modified when Timeline is in preview mode.</para>
+        <para>Implementing this interface in a PlayableAsset to specify which properties will be modified in Timeline's preview mode.</para>
       </summary>
     </member>
     <member name="M:UnityEngine.Timeline.IPropertyPreview.GatherProperties(UnityEngine.Playables.PlayableDirector,UnityEngine.Timeline.IPropertyCollector)">
@@ -371,7 +218,7 @@
     </member>
     <member name="?:UnityEngine.Timeline.ITimeControl">
       <summary>
-        <para>Interface that can be implemented by MonoBehaviours indicating that they receive time-related control calls from a PlayableGraph.</para>
+        <para>Interface that can be implemented by Monobehaviours indicating that they receive time-related control calls from a PlayableGraph.</para>
       </summary>
     </member>
     <member name="M:UnityEngine.Timeline.ITimeControl.OnControlTimeStart">
@@ -402,12 +249,12 @@
     </member>
     <member name="T:UnityEngine.Timeline.NotKeyableAttribute">
       <summary>
-        <para>Attribute to apply to a ScriptPlayable class or property to indicate that it is not animatable.</para>
+        <para>Attribute to apply to a ScriptPlayable class or property to indicate that it not animatable.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.Timeline.ParticleControlPlayable">
       <summary>
-        <para>Playable that synchronizes a particle system simulation.</para>
+        <para>Playable that control particle systems.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Timeline.ParticleControlPlayable.particleSystem">
@@ -415,27 +262,19 @@
         <para>Which particle system to control.</para>
       </summary>
     </member>
-    <member name="T:UnityEngine.Timeline.PlayableTrack">
-      <summary>
-        <para>A PlayableTrack is a track whose clips are custom playables.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEngine.Timeline.PlayableTrack.CreateClip">
-      <summary>
-        <para>Creates a clip on the track with a custom playable asset attached, whose type is specified by T.</para>
-      </summary>
-      <returns>
-        <para>A TimelineClip whose asset is of type T.</para>
-      </returns>
-    </member>
     <member name="T:UnityEngine.Timeline.PrefabControlPlayable">
       <summary>
-        <para>Playable that controls and instantiates a Prefab.</para>
+        <para>Platyable that controls and instanciate Prefab.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Timeline.PrefabControlPlayable.prefabInstance">
       <summary>
         <para>The instance of the prefab that has been generated for this playable.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Timeline.TimeControlPlayable">
+      <summary>
+        <para>Playable that manages the forward of calls to an object implementing ITimeControl.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.Timeline.TimelineAsset">
@@ -458,44 +297,6 @@
         <para>The length of the timeline when the durationMode is set to fixed length.</para>
       </summary>
     </member>
-    <member name="P:UnityEngine.Timeline.TimelineAsset.outputTrackCount">
-      <summary>
-        <para>Returns the the number of output tracks in the Timeline.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Timeline.TimelineAsset.rootTrackCount">
-      <summary>
-        <para>Returns the number of tracks at the root level of the timeline.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEngine.Timeline.TimelineAsset.CreateTrack(UnityEngine.Timeline.TrackAsset,System.String)">
-      <summary>
-        <para>Allows you to create a track and add it to the Timeline.</para>
-      </summary>
-      <param name="parent">Track to parent to. This can be null.</param>
-      <param name="name">Name to give the track.</param>
-      <returns>
-        <para>The created track.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.Timeline.TimelineAsset.DeleteClip(UnityEngine.Timeline.TimelineClip)">
-      <summary>
-        <para>Delete a clip from this timeline.</para>
-      </summary>
-      <param name="clip">The clip to delete.</param>
-      <returns>
-        <para>Returns true if the removal was successful.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.Timeline.TimelineAsset.DeleteTrack(UnityEngine.Timeline.TrackAsset)">
-      <summary>
-        <para>Deletes a track from a timeline, including all clips and subtracks.</para>
-      </summary>
-      <param name="track">The track to delete. It must be owned by the Timeline.</param>
-      <returns>
-        <para>True if the track was deleted successfully.</para>
-      </returns>
-    </member>
     <member name="T:UnityEngine.Timeline.TimelineAsset.DurationMode">
       <summary>
         <para>How the duration of the timeline is determined.</para>
@@ -509,28 +310,6 @@
     <member name="F:UnityEngine.Timeline.TimelineAsset.DurationMode.FixedLength">
       <summary>
         <para>The duration of the timeline is a fixed length.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEngine.Timeline.TimelineAsset.GetOutputTrack(System.Int32)">
-      <summary>
-        <para>Retrives the output track from the given index.</para>
-      </summary>
-      <param name="index">Index of the output track to retrieve. Must be between 0 and outputTrackCount.</param>
-    </member>
-    <member name="M:UnityEngine.Timeline.TimelineAsset.GetOutputTracks">
-      <summary>
-        <para>Gets a list of all output tracks in the Timeline.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEngine.Timeline.TimelineAsset.GetRootTrack(System.Int32)">
-      <summary>
-        <para>Retrieves at root track at the specified index.</para>
-      </summary>
-      <param name="index">Index of the root track to get. Must be between 0 and rootTrackCount.</param>
-    </member>
-    <member name="M:UnityEngine.Timeline.TimelineAsset.GetRootTracks">
-      <summary>
-        <para>Get an enumerable list of all root tracks.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.Timeline.TimelineClip">
@@ -590,7 +369,7 @@
     </member>
     <member name="P:UnityEngine.Timeline.TimelineClip.hasPostExtrapolation">
       <summary>
-        <para>Is the clip being extrapolated past it's end time?</para>
+        <para>Is the clip being extrapolated past it's end time.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Timeline.TimelineClip.hasPreExtrapolation">
@@ -676,6 +455,11 @@
         <para>A PlayableAsset Representing a track inside a timeline.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Timeline.TrackAsset.clips">
+      <summary>
+        <para>The clips owned by this TrackAsset.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.Timeline.TrackAsset.isEmpty">
       <summary>
         <para>Does this track have any clips?</para>
@@ -706,14 +490,6 @@
         <para>The TimelineAsset this track belongs to.</para>
       </summary>
     </member>
-    <member name="M:UnityEngine.Timeline.TrackAsset.CreateDefaultClip">
-      <summary>
-        <para>Creates a default clip for this track, where the clip's asset type is based on any  TrackClipTypeAttributes marking the track.</para>
-      </summary>
-      <returns>
-        <para>A new TimelineClip that is attached to the track.</para>
-      </returns>
-    </member>
     <member name="M:UnityEngine.Timeline.TrackAsset.CreateTrackMixer(UnityEngine.Playables.PlayableGraph,UnityEngine.GameObject,System.Int32)">
       <summary>
         <para>Creates a mixer used to blend playables generated by clips on the track.</para>
@@ -724,43 +500,6 @@
       <returns>
         <para>A handle to the Playable representing the mixer.</para>
       </returns>
-    </member>
-    <member name="M:UnityEngine.Timeline.TrackAsset.GetChildTracks">
-      <summary>
-        <para>The list of subtracks or child tracks attached to this track.</para>
-      </summary>
-      <returns>
-        <para>Child tracks owned directly by this object.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.Timeline.TrackAsset.GetClips">
-      <summary>
-        <para>Returns an enumerable list of clips owned by the track.</para>
-      </summary>
-      <returns>
-        <para>The list of clips owned by the track.</para>
-      </returns>
-    </member>
-    <member name="T:UnityEngine.Timeline.TrackAssetExtensions">
-      <summary>
-        <para>Extension methods for Track Assets.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEngine.Timeline.TrackAssetExtensions.GetGroup(UnityEngine.Timeline.TrackAsset)">
-      <summary>
-        <para>Gets the GroupTrack this track belongs to.</para>
-      </summary>
-      <param name="asset">The track asset.</param>
-      <returns>
-        <para>The parent GroupTrack or null if the Track is an override track, or root track.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.Timeline.TrackAssetExtensions.SetGroup(UnityEngine.Timeline.TrackAsset,UnityEngine.Timeline.GroupTrack)">
-      <summary>
-        <para>Assigns the track to the specified group track.</para>
-      </summary>
-      <param name="asset">The track to asset.</param>
-      <param name="group">The GroupTrack to assign the track to.</param>
     </member>
     <member name="T:UnityEngine.Timeline.TrackBindingTypeAttribute">
       <summary>
@@ -781,7 +520,7 @@
       <summary>
         <para>Specify the track color using [0-1] R,G,B values.</para>
       </summary>
-      <param name="r">Red value   [0-1].</param>
+      <param name="r">Red value	[0-1].</param>
       <param name="g">Green value [0-1].</param>
       <param name="b">Blue value [0-1].</param>
     </member>

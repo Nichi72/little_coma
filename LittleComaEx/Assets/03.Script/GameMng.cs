@@ -58,19 +58,24 @@ public class GameMng : MonoBehaviour {
     }
     IEnumerator Create_stage(int stage) // 스테이지 끝날때 stage값을 바꿔줘야함 
     {
+    
+        //yield return new WaitForSeconds(GameBalancer.stage_Status[stage].stage_length); 
+        yield return new WaitForSeconds(10f);
         
-        if (stage == GameBalancer.stage_Status[this.stage].stage_number)
+        this.stage += 1;
+        Debug.Log("@@ 씬 바뀌어요!" + this.stage);
+        //Debug.Log("");
+        if (this.stage < 3)
         {
-            
-            //yield return new WaitForSeconds(GameBalancer.stage_Status[stage].stage_length); 
-            yield return new WaitForSeconds(10f);
-            Debug.Log("@@ 씬 바뀌어요!");
-            this.stage = 2;
             SceneManager.LoadScene("Stage_02");
-            now_obstruction = Random.Range(7, 14);
-            Debug.Log("씬 바뀐 다음의"+now_obstruction);
-
         }
+        else
+        {
+            SceneManager.LoadScene("coming soon");
+        }
+        now_obstruction = Random.Range(7, 14);
+        Obstruction_Status.Obstruction_count = 0;
+        Debug.Log("씬 바뀐 다음의"+now_obstruction);
     }
 
     IEnumerator Create_obstruction(int stage) // 스테이지 끝날때 stage값을 바꿔줘야함

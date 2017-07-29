@@ -234,7 +234,7 @@ public class Obstruction : MonoBehaviour {
     }
     public override string ToString()
     {
-        return string.Format("stage :: {0} //  now_obstruction  :: {1}", GameMng.Instance.stage, GameMng.Instance.now_obstruction);
+        return string.Format("stage :: {0} //  now_obstruction  :: {1}  // Obstruction_count :: {2} ", GameMng.Instance.stage, GameMng.Instance.now_obstruction , Obstruction_Status.Obstruction_count);
     }
 
     public IEnumerator Destroy_obstruction(float delay)
