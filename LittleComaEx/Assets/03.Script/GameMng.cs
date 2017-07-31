@@ -59,8 +59,8 @@ public class GameMng : MonoBehaviour {
     IEnumerator Create_stage(int stage) // 스테이지 끝날때 stage값을 바꿔줘야함 
     {
     
-        //yield return new WaitForSeconds(GameBalancer.stage_Status[stage].stage_length); 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(GameBalancer.stage_Status[stage].stage_length); 
+        //yield return new WaitForSeconds(10f);
         
         this.stage += 1;
         Debug.Log("@@ 씬 바뀌어요!" + this.stage);
