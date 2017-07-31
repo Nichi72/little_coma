@@ -50,12 +50,32 @@ public class GameMng : MonoBehaviour {
         now_obstruction =Random.Range(4, 8); // 4~7
         StartCoroutine(Create_stage(stage));
         StartCoroutine(Create_obstruction(stage));
+        StartCoroutine(skipStage());
     }
     public int RadomF(int min , int max , int [] num )
     {
         
         return 0;
     }
+
+    IEnumerator skipStage()
+    {
+        while (true)
+        {
+            // 키 입력
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (stage + 1 > 2)
+                {
+                    SceneManager.LoadScene("coming soon");
+                }
+                else
+                    SceneManager.LoadScene("Stage_0" + (stage+1));
+            }
+            yield return new WaitForFixedUpdate();
+        }        
+    }
+
     IEnumerator Create_stage(int stage) // 스테이지 끝날때 stage값을 바꿔줘야함 
     {
     
