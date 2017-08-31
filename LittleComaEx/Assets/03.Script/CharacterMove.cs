@@ -20,7 +20,7 @@ public class CharacterMove : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void OnPointerDown(PointerEventData eventData)

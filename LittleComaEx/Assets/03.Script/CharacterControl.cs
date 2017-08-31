@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterControl : MonoBehaviour
 {
+    static CharacterControl _instence;
 
     // 캐릭터의 Transform 변수
     Transform playerTransform;
@@ -41,8 +42,19 @@ public class CharacterControl : MonoBehaviour
     // 현재 캐릭터의 HP
     float hitPoint;
 
+    // 방어막 오브젝트
+    GameObject object_shield;
+
     // ?? 뭐지
     public int gook = 1;
+
+    public static CharacterControl Instence
+    {
+        get
+        { return _instence; }
+        set
+        { }
+    }
 
     public float HitPoint
     {
@@ -51,6 +63,20 @@ public class CharacterControl : MonoBehaviour
 
         set
         { }
+    }
+
+    IEnumerator changeMoveSpeed(float timeLimit)
+    {
+        float tmp = moveSpeed;
+        moveSpeed = moveSpeed * 2;
+
+        yield return new WaitForSeconds(timeLimit);
+        moveSpeed = tmp;
+    }
+
+    private void Awake()
+    {
+        _instence = this;
     }
 
     // Use this for initialization
@@ -67,6 +93,7 @@ public class CharacterControl : MonoBehaviour
         bt_Right = GameObject.Find("Bt_Right").GetComponent<Button>();
         limitPosition_Left = 0.0f - (Camera.main.aspect * Camera.main.orthographicSize - 0.6f);
         limitPosition_Right = Camera.main.aspect * Camera.main.orthographicSize - 0.6f;
+        object_shield = transform.Find("Shield").gameObject;
     }
 
     // 캐릭터의 상태 초기화
@@ -87,7 +114,7 @@ public class CharacterControl : MonoBehaviour
         print("Start Move Character");
         state = State.MoveDirection;
         soundManager.PlaySE(SE_OnChangeDirection);
-        
+
         switch (direction)
         {
             case "Left":
@@ -159,12 +186,12 @@ public class CharacterControl : MonoBehaviour
     // 충돌
     void OnDamage(object[] data)
     {
-        
+
         //효과음
         soundManager.PlaySE(SE_OnDamage);
 
         // HP값 수정
-        hitPoint -= (float) data[1];
+        hitPoint -= (float)data[1];
 
         // 장애물 삭제
         GameObject.Destroy(data[0] as GameObject);
@@ -182,10 +209,11 @@ public class CharacterControl : MonoBehaviour
 
     }
 
+    /*
     // 충돌된 장애물 삭제
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.tag == "Obstruction")
+        if (collision.collider.tag == "Obstruction")
             GameObject.Destroy(collision.gameObject);
     }
 
@@ -193,5 +221,24 @@ public class CharacterControl : MonoBehaviour
     {
         if (other.tag == "Obstruction")
             GameObject.Destroy(other.gameObject);
+    }
+    */
+    // 방어막 효과
+    private IEnumerator effect_shield(float timeLimit)
+    {
+        // 방어막 생성
+        object_shield.SetActive(true);
+        // 방어막 유지 시간
+        yield return new WaitForSeconds(timeLimit);
+        // 방어막 제거
+        object_shield.SetActive(false);
+    }
+
+    // 체력 회복
+    private void effect_Recovery(float recoverypoint)
+    {
+        HitPoint += recoverypoint;
+        if (hitPoint > MaxHitPoint)
+            hitPoint = MaxHitPoint;
     }
 }

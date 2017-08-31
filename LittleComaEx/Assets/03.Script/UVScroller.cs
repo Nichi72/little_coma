@@ -3,6 +3,8 @@ using System.Collections;
 
 public class UVScroller : MonoBehaviour
 {
+    static UVScroller _instence = null;
+
     public enum ScrollDirection : int
     {
         None, Horizontal, Vertical, Both
@@ -11,6 +13,28 @@ public class UVScroller : MonoBehaviour
     public ScrollDirection direction;
     public float moveSpeed = 10;
     private float delta = 0.02f;
+
+    public static UVScroller Instence
+    {
+        get
+        { return _instence; }
+        set
+        { }
+    }
+
+    private void Awake()
+    {
+        _instence = this;
+    }
+
+    IEnumerable changeScrolSpeed(float timeLimit)
+    {
+        float tmp = moveSpeed;
+        moveSpeed = moveSpeed * 1.5f;
+        yield return new WaitForSeconds(timeLimit);
+        moveSpeed = tmp;
+    }
+
 
     void Update()
     {

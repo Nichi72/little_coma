@@ -183,6 +183,26 @@ public class Obstruction : MonoBehaviour {
             case (int)GameBalancer.Obstruction_enum.Windmill:
                 obstruction();
                 break;
+            // 조개 // 패턴 = 일직선으로 하강
+            case (int)GameBalancer.Obstruction_enum.shellfish:
+                obstruction();
+                break;
+            // 문어 // 패턴 = 일직선 하강 -> 일시정지 -> 대각선 하강 -> 일시정지 -> 일직선 하강
+            case (int)GameBalancer.Obstruction_enum.octopus:
+                obstruction();
+                break;
+            // 상어 // 패턴 = 일직선 하강 (일정범위내 플레이어 존재) -> 플레이어 방향
+            case (int)GameBalancer.Obstruction_enum.shark:
+                obstruction();
+                break;
+            // 산호 // 패턴 = 고정형(배경이동 속도와 같이 내려옴)
+            case (int)GameBalancer.Obstruction_enum.squid:
+                obstruction();
+                break;
+            // 오징어 // 패턴 = 일직선 하강 -> 일시정지 -> 대각선 하강 -> 일직선 하강 -> 대각선 하강
+            case (int)GameBalancer.Obstruction_enum.coral:
+                obstruction();
+                break;
           
 
         }
@@ -239,11 +259,13 @@ public class Obstruction : MonoBehaviour {
 
     public IEnumerator Destroy_obstruction(float delay)
     {
+        int stageNum = GameMng.Instance.stage;
         while (true)
         {
             //Debug.Log("@@Game Stage: " + GameMng.Instance.stage);
 
-
+            GameMng.Instance.now_obstruction = Random.Range(stageNum*5-1, (stageNum+1)*5-1);
+            /*
             if (GameMng.Instance.stage == 1)
             {
                 GameMng.Instance.now_obstruction = Random.Range(4, 9); // 재설정 해줘야 함
@@ -259,6 +281,7 @@ public class Obstruction : MonoBehaviour {
             {
                Debug.Log("Now_ob_Exception");
             }
+            */
             yield return new WaitForSeconds(delay);
             Obstruction_Status.Obstruction_count--;
             obstruction = null;
@@ -275,8 +298,12 @@ public class Obstruction : MonoBehaviour {
             Destroy_obstruction(0);
             collision.gameObject.SendMessage("OnDamage", damage);
         }
+        else if (collision.collider.tag == "Shield")
+        {
+            Destroy_obstruction(0);
+        }
     }
-
+    /*
     private void OnTriggerEnter(Collider other)
     {
         object[] data = new object[2] {this.gameObject, damage};
@@ -286,7 +313,7 @@ public class Obstruction : MonoBehaviour {
             other.gameObject.SendMessage("OnDamage", data);
         }
     }
-
+    */
     //public virtual IEnumerator I_pattern_base() // 기본
     //{
     //    Debug.Log("########################코루틴 들어왔습니다");

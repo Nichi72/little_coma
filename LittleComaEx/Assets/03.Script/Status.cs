@@ -67,10 +67,11 @@ namespace Pakage01
 
         public enum Obstruction_enum { initial_value, Asteroid, miniBlackhole, Comet,       //기본 방해물 
                                        apple , peach , grape , Strawberry , Fruit_tree,     //스테이지 1번 Obstruction_enum = 4~8        
-                                       cookie, Cake , Macaron , Pudding , Windmill          //스테이지 2번 Obstruction_enum = 9~13
+                                       cookie, Cake , Macaron , Pudding , Windmill,         //스테이지 2번 Obstruction_enum = 9~13
+                                       shellfish, octopus, shark, squid, coral              //스테이지 3번 Obstruction_enum = 14~18
         };
 
-        public static Obstruction_Status[] obstruction_status = new Obstruction_Status[14]
+        public static Obstruction_Status[] obstruction_status = new Obstruction_Status[19]
         {
             //인수값              (string name, float incidence, float damage, float speed, float scale) // 
             new Obstruction_Status((int)Obstruction_enum.initial_value, 0.6f,5f,5f,6f),  // name이 곧 스테이지 넘버 
@@ -90,7 +91,11 @@ namespace Pakage01
             new Obstruction_Status((int)Obstruction_enum.Pudding,0.7f,2f,12f,5f),
             new Obstruction_Status((int)Obstruction_enum.Windmill,0.65f,5f,10f,8f),
 
-
+            new Obstruction_Status((int)Obstruction_enum.shellfish, 0.85f, 2.0f, 15.0f, 5.0f),
+            new Obstruction_Status((int)Obstruction_enum.octopus, 0.75f, 3.0f, 10.0f, 5.0f),
+            new Obstruction_Status((int)Obstruction_enum.shark, 0.7f, 4.0f,8.0f,6.0f),
+            new Obstruction_Status((int)Obstruction_enum.squid, 0.75f, 3.0f, 10.0f, 5.0f),
+            new Obstruction_Status((int)Obstruction_enum.coral, 0.65f, 5.0f, 5.0f, 8.0f)
         };
 
         public static Stage_Status[] stage_Status = new Stage_Status[3]
