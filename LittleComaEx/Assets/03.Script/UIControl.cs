@@ -31,9 +31,12 @@ public class UIControl : MonoBehaviour {
         while (true)
         {
             hitPoint = CharacterData.HitPoint;
-            // HP가 최대치일 경우 결과값이 0이 나오기 때문에 제외시킴
-            if(MaxHitPoint - hitPoint != 0)
+            // HP가 최대치일 경우 결과값이 0이 나오기 때문에 아래서 별도 처리
+            if (MaxHitPoint - hitPoint != 0)
                 UI_HitPoint.value = 100 * (hitPoint / MaxHitPoint);
+            else if (hitPoint == MaxHitPoint) {
+                UI_HitPoint.value = 100;
+            }
             yield return new WaitForFixedUpdate();
         }
     }

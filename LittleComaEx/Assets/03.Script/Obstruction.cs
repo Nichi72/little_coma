@@ -291,14 +291,30 @@ public class Obstruction : MonoBehaviour {
     }
 
     // 플레이어 캐릭터와의 충돌 체크
+    /*
     private void OnCollisionEnter(Collision collision)
     {
+        print("층돌");
         if (collision.collider.tag == "Player")
         {
             Destroy_obstruction(0);
             collision.gameObject.SendMessage("OnDamage", damage);
         }
         else if (collision.collider.tag == "Shield")
+        {
+            Destroy_obstruction(0);
+        }
+    }
+    */
+    private void OnTriggerEnter(Collider coll)
+    {
+        print("층돌");
+        if (coll.tag == "Player")
+        {
+            Destroy_obstruction(0);
+            coll.gameObject.SendMessage("OnDamage", damage);
+        }
+        else if (coll.tag == "Shield")
         {
             Destroy_obstruction(0);
         }

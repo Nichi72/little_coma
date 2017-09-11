@@ -21,8 +21,11 @@ using UnityEngine.SceneManagement;
  * */
 public class GameMng : MonoBehaviour {
 
-    public GameObject [] obj;
     public int objCount; // 한 스테이지에 총 방해물 수 제한 
+    public GameObject [] obj; // 장애물 오브젝트
+    public int objCountMax_Item;// 아이템 오브젝트 동시 출현 개수 제한
+    GameObject[] objectManagementArray_Item; // 현재 아이템 오브젝트 관리배열
+    public GameObject[] prefab_Item = null; // 아이템 오브젝트
     public int stage=2;
     public int now_obstruction;               // 현재 쓸 Obstruction_Status의 배열을 랜덤으로 선정
     public int create_obstruction_list;       // Obstruction_Status의 배열에서 사용할 총 갯수 만약 2를 적어두면 4개의 배열중 2개를 쓴다는 의미 
@@ -50,6 +53,7 @@ public class GameMng : MonoBehaviour {
         now_obstruction =Random.Range(4, 8); // 4~7
         StartCoroutine(Create_stage(stage));
         StartCoroutine(Create_obstruction(stage));
+        StartCoroutine(Create_Item());
         StartCoroutine(skipStage());
     }
     public int RadomF(int min , int max , int [] num )
@@ -142,6 +146,51 @@ public class GameMng : MonoBehaviour {
             }
             yield return new WaitForSeconds(0.4f);// 생성주기 
             // Test용 //yield return new WaitForSeconds(6f);// 생성주기 
+        }
+    }
+
+    // 아이템 생성 루틴
+    IEnumerator Create_Item()
+    {
+        objectManagementArray_Item = new GameObject[objCountMax_Item]; // 아이템 최대 생성 개수에 맞게 아이템 관리배열 크기조정
+        Vector3 createPosition;
+        while (true)
+        {
+            /*
+            foreach (GameObject obj in objectManagementArray_Item)
+            {
+                if (obj == null)
+                {
+                    int temp = Random.Range(0, 4); // 랜덤하게 아이템 선택
+                    createPosition = new Vector3(Random.Range(-3.0f, 3.0f), 0, 0); // 오브젝트 출현 좌표 제한: X축 -3 ~ +3, Y축 0, Z축 0
+                    objectManagementArray_Item[] = Instantiate(prefab_Item[temp], createPosition, transform.rotation); // 아이템 인스턴스 생성
+                }
+            }
+            */
+            //yield return new WaitForSeconds(Random.Range(5.0f, 8.0f)); // 첫 아이템 생성 텀
+            for (int i = 0; i < objectManagementArray_Item.Length; i++)
+            {
+                if (objectManagementArray_Item[i] == null)
+                {
+                    int temp = Random.Range(0, prefab_Item.Length); // 랜덤하게 아이템 선택
+                    createPosition = new Vector3(Random.Range(-3.0f, 3.0f), 7.0f, 0); // 오브젝트 출현 좌표 제한: X축 -3 ~ +3, Y축 5, Z축 0
+                    objectManagementArray_Item[i] = Instantiate(prefab_Item[temp], createPosition, transform.rotation); // 아이템 인스턴스 생성 및 관리 배열에 연결
+                }
+                yield return new WaitForSeconds(Random.Range(3.0f, 6.0f)); // 랜덤한 생성주기
+            }
+            yield return new WaitForFixedUpdate(); // 대기
+        }
+    }
+
+    void Destroy_Item(GameObject obj)
+    {
+        for (int i = 0; i < objectManagementArray_Item.Length; i++)
+        {
+            if (objectManagementArray_Item[i] == obj)
+            {
+                objectManagementArray_Item[i] = null;
+                Destroy(obj);
+            }
         }
     }
 }

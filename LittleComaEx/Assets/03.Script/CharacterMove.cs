@@ -26,7 +26,6 @@ public class CharacterMove : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnPointerDown(PointerEventData eventData)
     {
         characterControl.SendMessage("moveCharacter", direction);
-        print("RightClicked");
     }
 
     public void OnPointerUp(PointerEventData eventData)

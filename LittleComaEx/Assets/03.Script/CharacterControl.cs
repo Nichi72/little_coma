@@ -10,9 +10,10 @@ public class CharacterControl : MonoBehaviour
     // 캐릭터의 Transform 변수
     Transform playerTransform;
     // 캐릭터의 상태 표시를 위한 열거형 데이터
-    enum State { None, Idle, Run, ChangeDirection, MoveDirection };
+    enum State { NONE, NORMAL, SHIELD, IDLE, MOVING };
     // 현재 캐릭터의 행동 상태
-    State state = State.Idle;
+    State state = State.NONE;
+    State state_Move = State.NONE;
     // 캐릭터가 이동할 좌표 정리
     // float LeftPosition = -1.5f, CenterPosition = 0.0f, RightPosition = 1.5f;
     // 캐릭터 이동 제한
@@ -83,7 +84,8 @@ public class CharacterControl : MonoBehaviour
     void Start()
     {
         characterDataReset();
-        state = State.Run;
+        state = State.NORMAL;
+        state_Move = State.IDLE;
         playerTransform = this.gameObject.transform;
         PlayerPositionY = playerTransform.position.y;
         PlayerPositionZ = playerTransform.position.z;
@@ -105,20 +107,18 @@ public class CharacterControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //print("HP : " + hitPoint);
+
     }
 
 
     public IEnumerator moveCharacter(string direction)
     {
-        print("Start Move Character");
-        state = State.MoveDirection;
+        state_Move = State.MOVING;
         soundManager.PlaySE(SE_OnChangeDirection);
-
         switch (direction)
         {
             case "Left":
-                while (state == State.MoveDirection)
+                while (state_Move == State.MOVING)
                 {
                     if (playerTransform.position.x > limitPosition_Left)
                         playerTransform.position = new Vector3(playerTransform.position.x - moveSpeed, PlayerPositionY, PlayerPositionZ);
@@ -126,23 +126,38 @@ public class CharacterControl : MonoBehaviour
                 }
                 break;
             case "Right":
-                print("Move to right");
-                while (state == State.MoveDirection)
+                while (state_Move == State.MOVING)
                 {
-                    print("moving");
                     if (playerTransform.position.x < limitPosition_Right)
                         playerTransform.position = new Vector3(playerTransform.position.x + moveSpeed, PlayerPositionY, PlayerPositionZ);
-                    print("move position: " + playerTransform.position.x);
                     yield return new WaitForFixedUpdate();
                 }
                 break;
         }
+        /*
+        switch (direction)
+        {
+            case "Left":
+                if (playerTransform.position.x > limitPosition_Left)
+                    playerTransform.position = new Vector3(playerTransform.position.x - moveSpeed, PlayerPositionY, PlayerPositionZ);
+                yield return new WaitForFixedUpdate();
+                break;
+            case "Right":
+                if (playerTransform.position.x < limitPosition_Right)
+                    playerTransform.position = new Vector3(playerTransform.position.x + moveSpeed, PlayerPositionY, PlayerPositionZ);
+                print("move position: " + playerTransform.position.x);
+                yield return new WaitForFixedUpdate();
+                break;
+        }
+        */
     }
+
 
     public void stopCharacter()
     {
-        state = State.Idle;
+        state_Move = State.IDLE;
     }
+
 
     /*
     void SetMovePosition(string point)
@@ -183,18 +198,40 @@ public class CharacterControl : MonoBehaviour
     }
     */
 
-    // 충돌
+    // 장애물 충돌
+    /*
     void OnDamage(object[] data)
     {
+        if (state == State.NORMAL) {
+            //효과음
+            soundManager.PlaySE(SE_OnDamage);
 
-        //효과음
-        soundManager.PlaySE(SE_OnDamage);
+            // HP값 수정
+            hitPoint -= (float)data[1];
 
-        // HP값 수정
-        hitPoint -= (float)data[1];
+        }
 
         // 장애물 삭제
         GameObject.Destroy(data[0] as GameObject);
+
+        // 캐릭터 사망
+        if (hitPoint <= 0)
+        {
+            dead();
+        }
+    }
+    */
+    void OnDamage(float demage)
+    {
+        if (state == State.NORMAL)
+        {
+            //효과음
+            soundManager.PlaySE(SE_OnDamage);
+
+            // HP값 수정
+            hitPoint -= demage;
+
+        }
 
         // 캐릭터 사망
         if (hitPoint <= 0)
@@ -223,22 +260,29 @@ public class CharacterControl : MonoBehaviour
             GameObject.Destroy(other.gameObject);
     }
     */
+
     // 방어막 효과
-    private IEnumerator effect_shield(float timeLimit)
+    private IEnumerator effect_Shield(float timeLimit)
     {
         // 방어막 생성
         object_shield.SetActive(true);
+        state = State.SHIELD;
         // 방어막 유지 시간
         yield return new WaitForSeconds(timeLimit);
         // 방어막 제거
         object_shield.SetActive(false);
+        state = State.NORMAL;
     }
 
     // 체력 회복
     private void effect_Recovery(float recoverypoint)
     {
-        HitPoint += recoverypoint;
-        if (hitPoint > MaxHitPoint)
+        // 최대 체력 오버시 최대체력으로 맞춰줌
+        if (hitPoint + recoverypoint > MaxHitPoint) {
             hitPoint = MaxHitPoint;
+        }
+        else {
+            hitPoint += recoverypoint;
+        }
     }
 }

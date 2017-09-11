@@ -61,6 +61,7 @@
      <Compile Include="Assets\03.Script\Obstruction.cs" />
      <Compile Include="Assets\03.Script\Preparations.cs" />
      <Compile Include="Assets\03.Script\Random.cs" />
+     <Compile Include="Assets\03.Script\Shield.cs" />
      <Compile Include="Assets\03.Script\SoundManager.cs" />
      <Compile Include="Assets\03.Script\Status.cs" />
      <Compile Include="Assets\03.Script\UIControl.cs" />

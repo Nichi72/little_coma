@@ -28,7 +28,8 @@ public class Item : MonoBehaviour {
         gameManager = GameMng.Instance;
         characterControl = CharacterControl.Instence;
         background = UVScroller.Instence;
-	}
+        GetComponent<Rigidbody>().AddForce(Vector3.down*100);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -40,13 +41,13 @@ public class Item : MonoBehaviour {
 	// 방어막 효과
     void shield(float timeLimit)
     {
-        characterControl.SendMessage("effect_shield", timeLimit);
+        characterControl.SendMessage("effect_Shield", timeLimit);
     }
 
 	// HP회복
     void recuvery(float recuveryPoint)
     {
-        characterControl.SendMessage("effect_recuvery", recuveryPoint);
+        characterControl.SendMessage("effect_Recovery", recuveryPoint);
     }
 
 	// 스피드 변경
@@ -62,15 +63,16 @@ public class Item : MonoBehaviour {
         gameManager.SendMessage("clearObstruction");
     }
 
-	// 캐릭터와 충돌시 효과를 분류하여 작동하도록 만들었습니다.
-	void OnCollisionEnter(Collision coll)
+    // 캐릭터와 충돌시 효과를 분류하여 작동하도록 만들었습니다.
+    /*
+    void OnCollisionEnter(Collision coll)
 	{
 		if (coll.collider.tag == "Player") 
 		{
 			switch (item_effect) 
 			{
 			case EFFECT.SHIELD:
-				shield(0.5f); break;
+				shield(2.0f); break;
 			case EFFECT.RECUVERY:
 				recuvery(5.0f);
 				break;
@@ -82,5 +84,32 @@ public class Item : MonoBehaviour {
 				break;
 			}
 		}
-	}
+        gameManager.SendMessage("Destroy_Item", this.gameObject, SendMessageOptions.DontRequireReceiver);
+    }
+    */
+    // 캐릭터와 충돌시 효과를 분류하여 작동하도록 만들었습니다.
+    void OnTriggerEnter(Collider coll)
+    {
+        if (coll.tag == "Player")
+        {
+            switch (item_effect)
+            {
+                case EFFECT.SHIELD:
+                    shield(2.0f); break;
+                case EFFECT.RECUVERY:
+                    recuvery(5.0f); break;
+                case EFFECT.SPEEDCHANGE:
+                    change_Speed(); break;
+                case EFFECT.CLEAROBSTRUCTION:
+                    clearObstruction(); break;
+            }
+            gameManager.SendMessage("Destroy_Item", this.gameObject, SendMessageOptions.DontRequireReceiver);
+        }
+    }
+
+    // 오브젝트가 화면 밖으로 나간 경우 사라지도록 처리
+    void OnBecameInvisible()
+    {
+        gameManager.SendMessage("Destroy_Item", this.gameObject, SendMessageOptions.DontRequireReceiver);
+    }
 }
